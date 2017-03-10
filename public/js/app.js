@@ -72,6 +72,15 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 	};
 })
 .controller('LoginController', function($scope, $http, $location, $localStorage, $window) {
+
+	function initController() {
+		if (localStorage.getItem('token')) {
+			$location.path('/dashboard');
+		}
+	}
+
+	initController();
+
 	$scope.login = function() {
 		console.log('login');
 		console.log($scope.form);
