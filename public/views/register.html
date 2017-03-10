@@ -1,0 +1,87 @@
+<h3 style="text-align: center; text-decoration: underline;">ฟอร์มลงทะเบียน</h3>
+<form class="form-horizontal" name="form" ng-submit="form.$valid && save()" novalidate>
+	
+	<div class="form-group">
+		<label class="col-md-2 control-label">รหัสบัตรประชาชน</label>
+		<div class="col-md-4">
+			<input type="text" name="id_card" ng-model="idCard" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">ชื่อ-นามสกุล</label>
+		<div class="col-md-4">
+			<input type="text" name="name" ng-model="name" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">วันเกิด</label>
+		<div class="col-md-4">
+			<input type="text" name="birthdate" ng-model="birthdate" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">เบอร์โทร</label>
+		<div class="col-md-4">
+			<input type="text" name="tel" ng-model="tel" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">อีเมล์</label>
+		<div class="col-md-4">
+			<input type="text" name="email" ng-model="email" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">ไอดีไลน์</label>
+		<div class="col-md-4">
+			<input type="text" name="lineID" ng-model="lineID" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">ที่อยู่</label>
+		<div class="col-md-10">
+			<input type="text" name="email" ng-model="email" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">จบการศึกษา</label>
+		<div class="col-md-4">
+			<input type="text" name="graduate_degree" ng-model="graduateDegree" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">ความเชี่ยวชาญ</label>
+		<div class="col-md-4">
+			<input type="text" name="expertise" ng-model="expertise" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">ประเภทวิทยาลัย</label>
+		<div class="col-md-4">
+			<input type="text" name="college_type" ng-model="collegeType" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">ชื่อวิทยาลัย</label>
+		<div class="col-md-4">
+			<input type="text" name="college_name" ng-model="collegeName" class="form-control">
+		</div>
+		
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">สังกัดสาขา</label>
+		<div class="col-md-4">
+			<input type="text" name="department" ng-model="department" class="form-control">
+		</div>
+		<label class="col-md-2 control-label">จังหวัด</label>
+		<div class="col-md-4">
+			<input type="text" name="province" ng-model="province" class="form-control">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label"></label>
+		<div class="col-md-4">
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> บันทึก</button>
+			<button type="button" class="btn btn-default">ล้างข้อมูล</button>
+		</div>
+	</div>
+
+
+</form>

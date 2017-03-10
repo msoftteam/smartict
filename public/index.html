@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>ITDS-VEC</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./css/custom-style.css">
+</head>
+<body>
+	<div class="container">
+		<h2>ITDS-VEC : ระบบฐานข้อมูลบุคลากรครูไอที สำนักงานคณะกรรมการการอาชีวศึกษา</h2>
+		<div ng-controller="MenuController">
+			<!-- <a ui-sref="/">หน้าแรก</a> -->
+			<a ui-sref="dashboard" ng-show="isLogin">เมนูหลัก</a>
+			<a ui-sref="login" ng-show="!isLogin">เข้าสู่ระบบ</a>
+			<a ui-sref="register" ng-show="!isLogin">ลงทะเบียน</a>
+			<a href="#" ng-click="logout()" ng-show="isLogin">ออกจากระบบ</a>
+		</div>
+		<hr>
+		<ui-view></ui-view>
+	</div>
+
+	<script type="text/javascript" src="./js/angular.min.js"></script>
+	<script type="text/javascript" src="./js/angular-ui-router.min.js"></script>
+	<script type="text/javascript" src="./js/ngStorage.min.js"></script>
+	<script type="text/javascript" src="./js/app.js"></script>
+</body>
+</html>

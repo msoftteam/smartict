@@ -1,0 +1,30 @@
+<div class="col-md-4 col-md-offset-4 well">
+	<h3 style="text-align: center;">เข้าสู่ระบบ</h3>
+
+	<form class="form-horizontal" name="form" ng-submit="form.$valid && login()" novalidate style="margin-top: 5px;">
+
+		<div class="form-group" ng-class="{ 'has-error' : form.$submitted && form.username.$invalid }">
+			<label class="col-md-4 control-label">ชื่อผู้ใช้ <span class="star-red">*</span></label>
+			<div class="col-md-8">
+				<input type="text" name="username" ng-model="username" class="form-control" required>
+				<p ng-show="form.$submitted && form.username.$invalid" class="help-block">กรุณาป้อนชื่อผู้ใช้</p>
+			</div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error' : form.$submitted && form.password.$invalid }">
+			<label class="col-md-4 control-label">รหัสผ่าน <span class="star-red">*</span></label>
+			<div class="col-md-8">
+				<input type="password" name="password" ng-model="password" class="form-control" required>
+				<p ng-show="form.$submitted && form.password.$invalid" class="help-block">กรุณาป้อนรหัสผ่าน</p>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-md-4 control-label"></label>
+			<div class="col-md-8">
+				<button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
+			</div>
+		</div>
+
+	</form>
+</div">
