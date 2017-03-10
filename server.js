@@ -13,6 +13,7 @@ var CollegeType = require('./models/college_type');
 var Major = require('./models/major');
 var EducationDegree = require('./models/education_degree');
 var Expertise = require('./models/expertise');
+var Region = require('./models/region');
 
 var PORT = process.env.PORT || 3000;
 
@@ -108,9 +109,10 @@ apiRoutes.get('/dashboard', passport.authenticate('jwt', {
 apiRoutes.post('/province', passport.authenticate('jwt', {
 	session: false
 }), function(req, res) {
-	//console.log(req.body.provinceName);
+	console.log(req.body.region);
 	var province = new Province({
-		province_name : req.body.provinceName
+		province_name : req.body.provinceName,
+		region: req.body.region
 	});
 
 	province.save(function(err) {
@@ -129,7 +131,17 @@ apiRoutes.get('/province', passport.authenticate('jwt', {
 	session: false
 }), function(req, res) {
 
-	Province.find({}, function(err, docs) {
+	/*Province.find({}, function(err, docs) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'cannot load province'
+			});
+		}
+		res.json(docs);
+	});*/
+
+	Province.find({}).populate('region').exec(function(err, docs) {
 		if (err) {
 			res.json({
 				success: false,
@@ -151,7 +163,10 @@ apiRoutes.put('/province', passport.authenticate('jwt', {
 			});
 		}
 
-		doc.update({province_name : req.body.provinceName}, function(err, doc) {
+		doc.update({
+			province_name : req.body.provinceName,
+			region: req.body.region
+		}, function(err, doc) {
 			if (err) {
 				res.json({
 					success: false,
@@ -515,7 +530,89 @@ apiRoutes.delete('/expertise/:id', passport.authenticate('jwt', {
 	});
 });
 
-// #################################### end expertise #############################
+// #################################### end expertise ######################
+
+// #################################### region #############################
+apiRoutes.post('/region', passport.authenticate('jwt', {
+	session: false
+}), function(req, res) {
+	var region = new Region({
+		regionName: req.body.regionName
+	});
+
+	region.save(function(err) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'insert not success'
+			})
+		}
+		res.json({
+			success: true,
+			message: 'insert success'
+		});
+	});
+});
+
+apiRoutes.get('/region', passport.authenticate('jwt', {
+	session: false
+}), function(req, res) {
+
+	Region.find({}, function(err, docs) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'cannot load region'
+			});
+		}
+		res.json(docs);
+	});
+});
+
+apiRoutes.put('/region', passport.authenticate('jwt', {
+	session: false
+}), function(req, res) {
+	Region.findById(req.body.id, function(err, doc) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'cannot load region to update'
+			});
+		}
+
+		doc.update({regionName: req.body.regionName}, function(err, doc) {
+			if (err) {
+				res.json({
+					success: false,
+					message: 'cannot update'
+				});
+			}
+			res.json({
+				success: true,
+				message: 'update success'
+			});
+		});
+	});
+});
+
+apiRoutes.delete('/region/:id', passport.authenticate('jwt', {
+	session: false
+}), function(req, res) {
+	Region.remove({_id: req.params.id}, function(err) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'delete fail'
+			});
+		}
+
+		res.json({
+			success: true,
+			message: 'delete success'
+		});
+	});
+});
+// #################################### end region #############################
 
 app.use('/api', apiRoutes);
 

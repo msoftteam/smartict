@@ -1,11 +1,19 @@
 <h3 style="text-align: center">จัดการข้อมูลจังหวัด</h3>
-<form class="form-horizontal" name="form" ng-submit="form.$valid && save()" novalidate style="margin-top: 5px;">
+<form class="form-horizontal" name="form" ng-submit="form.$valid && save()" novalidate style="margin-top: 15px;">
 	<input type="hidden" ng-model="id">
-	<div class="form-group" ng-class="{ 'has-error' : form.$submitted && form.provinceName.$invalid }">
-		<label class="col-md-3 control-label">ชื่อจังหวัด <span class="star-red">*</span></label>
-		<div class="col-md-6">
+	<div class="form-group">
+		<label class="col-md-2 control-label">ชื่อจังหวัด <span class="star-red">*</span></label>
+		<div class="col-md-3" ng-class="{ 'has-error' : form.$submitted && form.provinceName.$invalid }">
 			<input type="text" name="provinceName" ng-model="provinceName" class="form-control" required>
 			<p ng-show="form.$submitted && form.provinceName.$invalid" class="help-block">กรุณาป้อนชื่อจังหวัด</p>
+		</div>
+		<label class="col-md-1 control-label">ภูมิภาค <span class="star-red">*</span></label>
+		<div class="col-md-3" ng-class="{ 'has-error' : form.$submitted && form.region.$invalid }">
+			<select class="form-control" name="region" ng-model="region" required 
+			ng-options="r._id as r.regionName for r in regions">
+				<option value="">เลือกภูมิภาค</option>
+			</select>
+			<p ng-show="form.$submitted && form.region.$invalid" class="help-block">กรุณาเลือกภูมิภาค</p>
 		</div>
 		<div class="col-md-2">
 			<button type="submit" class="btn btn-primary">บันทึก</button>
@@ -19,6 +27,7 @@
 		<tr>
 			<th style="width: 50px;">#</th>
 			<th>ชื่อจังหวัด</th>
+			<th>ภูมิภาค</th>
 			<th style="width: 150px;"></th>
 		</tr>
 	</thead>
@@ -26,6 +35,7 @@
 		<tr ng-repeat="row in provinces">
 			<td style="text-align: center;">{{ $index + 1 }}</td>
 			<td>{{ row.province_name }}</td>
+			<td>{{ row.region.regionName }}</td>
 			<td style="text-align: center;">
 				<button type="button" class="btn btn-success" ng-click="edit(row)">แก้ไข</button>
 				<button type="button" class="btn btn-danger" ng-click="delete(row._id)">ลบ</button>

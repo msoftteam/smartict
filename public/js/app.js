@@ -58,6 +58,12 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		url: '/expertise',
 		templateUrl: '../views/expertise.html',
 		controller: 'ExpertiseController'
+	})
+	.state({
+		name: 'region',
+		url: '/region',
+		templateUrl: '../views/region.html',
+		controller: 'RegionController'
 	});
 })
 .run(function($location) {
@@ -159,6 +165,24 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 .controller('ProvinceController', function($scope, $http) {
 
 	$scope.provinces = [];
+	$scope.regions = [];
+
+	$scope.findRegion = function() {
+		$http.get('/api/region', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.regions = response;
+		}).error(function(e, status) {
+			if (status == 401) {
+				localStorage.removeItem('token');
+				$location.path('/login');
+			} else {
+				console.log(e);
+			}
+		});
+	};
+	$scope.findRegion();
 
 	$scope.findAll = function() {
 		$http.get('/api/province', {
@@ -182,7 +206,12 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 
 		if ($scope.id) {
 			
-			$http.put('/api/province', {id: $scope.id, provinceName: $scope.provinceName}, {
+			$http.put('/api/province', {
+				id: $scope.id, 
+				provinceName: $scope.provinceName,
+				region: $scope.region
+			}, 
+			{
 				headers:{ 'Authorization': localStorage.getItem('token') }
 			}).success(function(response) {
 				if (response.success) {
@@ -193,6 +222,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 				}
 				$scope.id = undefined;
 				$scope.provinceName = '';
+				$scope.region = '';
 				$scope.form.$setPristine();
 			}).error(function(e, status) {
 				if (status == 401) {
@@ -203,7 +233,10 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 				}
 			});
 		} else {
-			$http.post('/api/province', {provinceName: $scope.provinceName}, {
+			$http.post('/api/province', {
+				provinceName: $scope.provinceName,
+				region: $scope.region
+			}, {
 				headers:{ 'Authorization': localStorage.getItem('token') }
 			}).success(function(response) {
 				if (response.success) {
@@ -228,6 +261,9 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 	$scope.edit = function(data) {
 		$scope.id = data._id;
 		$scope.provinceName = data.province_name;
+		if (data.region) {
+			$scope.region = data.region._id;
+		}
 	};
 
 	$scope.delete = function(id) {
@@ -609,6 +645,99 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 
 	$scope.delete = function(id) {
 		$http.delete('/api/expertise/' + id, {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			if (response.success) {
+				console.log(response.message);
+				$scope.findAll();
+			} else {
+				console.log(response.message);
+			}
+		}).error(function(e, status) {
+			if (status == 401) {
+				localStorage.removeItem('token');
+				$location.path('/login');
+			} else {
+				console.log(e);
+			}
+		});
+	};
+})
+.controller('RegionController', function($scope, $http, $location, $rootScope) {
+	$scope.regions = [];
+
+	$scope.findAll = function() {
+		$http.get('/api/region', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.regions = response;
+		}).error(function(e, status) {
+			if (status == 401) {
+				localStorage.removeItem('token');
+				$location.path('/login');
+			} else {
+				console.log(e);
+			}
+		});
+	};
+
+	$scope.findAll();
+
+	$scope.save = function() {
+		if ($scope.id) {
+			
+			$http.put('/api/region', {id: $scope.id, regionName: $scope.regionName}, {
+				headers:{ 'Authorization': localStorage.getItem('token') }
+			}).success(function(response) {
+				if (response.success) {
+					console.log(response.message);
+					$scope.findAll();
+				} else {
+					console.log(response.message);
+				}
+				$scope.id = undefined;
+				$scope.regionName = '';
+				$scope.form.$setPristine();
+			}).error(function(e, status) {
+				if (status == 401) {
+					localStorage.removeItem('token');
+					$location.path('/login');
+				} else {
+					console.log(e);
+				}
+			});
+		} else {
+			$http.post('/api/region', {regionName: $scope.regionName}, {
+				headers:{ 'Authorization': localStorage.getItem('token') }
+			}).success(function(response) {
+				if (response.success) {
+					console.log(response.message);
+					$scope.findAll();
+				} else {
+					console.log(response.message);
+				}
+				$scope.regionName = '';
+				$scope.form.$setPristine();
+			}).error(function(e, status) {
+				if (status == 401) {
+					localStorage.removeItem('token');
+					$location.path('/login');
+				} else {
+					console.log(e);
+				}
+			});
+		}
+
+	};
+
+	$scope.edit = function(data) {
+		$scope.id = data._id;
+		$scope.regionName = data.regionName;
+	};
+
+	$scope.delete = function(id) {
+		$http.delete('/api/region/' + id, {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
 			if (response.success) {
