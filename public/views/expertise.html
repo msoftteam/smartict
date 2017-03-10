@@ -1,11 +1,11 @@
-<h3 style="text-align: center">จัดการข้อมูลประเภทวิทยาลัย</h3>
+<h3 style="text-align: center">จัดการข้อมูลความเชี่ยวชาญ</h3>
 <form class="form-horizontal" name="form" ng-submit="form.$valid && save()" novalidate style="margin-top: 5px;">
 	<input type="hidden" ng-model="id">
-	<div class="form-group" ng-class="{ 'has-error' : form.$submitted && form.collegeTypeName.$invalid }">
-		<label class="col-md-3 control-label">ประเภทวิทยาลัย <span class="star-red">*</span></label>
+	<div class="form-group" ng-class="{ 'has-error' : form.$submitted && form.expertiseName.$invalid }">
+		<label class="col-md-3 control-label">ความเชี่ยวชาญ <span class="star-red">*</span></label>
 		<div class="col-md-6">
-			<input type="text" name="collegeTypeName" ng-model="collegeTypeName" class="form-control" required>
-			<p ng-show="form.$submitted && form.collegeTypeName.$invalid" class="help-block">กรุณาป้อนประเภทวิทยาลัย</p>
+			<input type="text" name="expertiseName" ng-model="expertiseName" class="form-control" required>
+			<p ng-show="form.$submitted && form.expertiseName.$invalid" class="help-block">กรุณาป้อนความเชี่ยวชาญ</p>
 		</div>
 		<div class="col-md-2">
 			<button type="submit" class="btn btn-primary">บันทึก</button>
@@ -18,14 +18,14 @@
 	<thead>
 		<tr>
 			<th style="width: 50px;">#</th>
-			<th>ชื่อประเภทวิทยาลัย</th>
+			<th>ความเชี่ยวชาญ</th>
 			<th style="width: 150px;"></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="row in collegeTypes">
+		<tr ng-repeat="row in expertises">
 			<td style="text-align: center;">{{ $index + 1 }}</td>
-			<td>{{ row.collegeTypeName }}</td>
+			<td>{{ row.expertiseName }}</td>
 			<td style="text-align: center;">
 				<button type="button" class="btn btn-success" ng-click="edit(row)">แก้ไข</button>
 				<button type="button" class="btn btn-danger" ng-click="delete(row._id)">ลบ</button>
