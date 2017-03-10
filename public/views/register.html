@@ -2,76 +2,104 @@
 <form class="form-horizontal" name="form" ng-submit="form.$valid && save()" novalidate>
 	
 	<div class="form-group">
-		<label class="col-md-2 control-label">รหัสบัตรประชาชน</label>
-		<div class="col-md-4">
-			<input type="text" name="id_card" ng-model="idCard" class="form-control">
+		<label class="col-md-2 control-label">รหัสบัตรประชาชน <span class="star-red">*</span></label></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.idCard.$invalid }">
+			<input type="number" name="idCard" ng-model="idCard" class="form-control" maxlength="13" required>
+			<p ng-show="form.$submitted && form.idCard.$invalid" class="help-block">กรุณาป้อนรหัสบัตรประชาชน</p>
 		</div>
-		<label class="col-md-2 control-label">ชื่อ-นามสกุล</label>
-		<div class="col-md-4">
-			<input type="text" name="name" ng-model="name" class="form-control">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-md-2 control-label">วันเกิด</label>
-		<div class="col-md-4">
-			<input type="text" name="birthdate" ng-model="birthdate" class="form-control">
-		</div>
-		<label class="col-md-2 control-label">เบอร์โทร</label>
-		<div class="col-md-4">
-			<input type="text" name="tel" ng-model="tel" class="form-control">
+		<label class="col-md-2 control-label">ชื่อ-นามสกุล <span class="star-red">*</span></label></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.name.$invalid }">
+			<input type="text" name="name" ng-model="name" class="form-control" required>
+			<p ng-show="form.$submitted && form.name.$invalid" class="help-block">กรุณาป้อนชื่อ-นามสกุล</p>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label class="col-md-2 control-label">อีเมล์</label>
-		<div class="col-md-4">
-			<input type="text" name="email" ng-model="email" class="form-control">
+		<label class="col-md-2 control-label">วันเกิด <span class="star-red">*</span></label></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.birthdate.$invalid }">
+			<input type="text" name="birthdate" ng-model="birthdate" class="form-control" placeholder="ว/ด/ป (03/11/2525)" required>
+			<p ng-show="form.$submitted && form.birthdate.$invalid" class="help-block">กรุณาป้อนวันเกิด</p>
 		</div>
-		<label class="col-md-2 control-label">ไอดีไลน์</label>
-		<div class="col-md-4">
-			<input type="text" name="lineID" ng-model="lineID" class="form-control">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-md-2 control-label">ที่อยู่</label>
-		<div class="col-md-10">
-			<input type="text" name="email" ng-model="email" class="form-control">
+		<label class="col-md-2 control-label">เบอร์โทร <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.tel.$invalid }">
+			<input type="text" name="tel" ng-model="tel" class="form-control" required>
+			<p ng-show="form.$submitted && form.tel.$invalid" class="help-block">กรุณาป้อนเบอร์โทร</p>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label class="col-md-2 control-label">จบการศึกษา</label>
-		<div class="col-md-4">
-			<input type="text" name="graduate_degree" ng-model="graduateDegree" class="form-control">
+		<label class="col-md-2 control-label">อีเมล์ <span class="star-red">*</span></label></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.email.$invalid }">
+			<input type="text" name="email" ng-model="email" class="form-control" required>
+			<p ng-show="form.$submitted && form.email.$invalid" class="help-block">กรุณาป้อนอีเมล์</p>
 		</div>
-		<label class="col-md-2 control-label">ความเชี่ยวชาญ</label>
-		<div class="col-md-4">
-			<input type="text" name="expertise" ng-model="expertise" class="form-control">
+		<label class="col-md-2 control-label">ไอดีไลน์ <span class="star-red">*</span></label></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.lineID.$invalid }">
+			<input type="text" name="lineID" ng-model="lineID" class="form-control" required>
+			<p ng-show="form.$submitted && form.lineID.$invalid" class="help-block">กรุณาป้อนไอดีไลน์</p>
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label class="col-md-2 control-label">ประเภทวิทยาลัย</label>
-		<div class="col-md-4">
-			<input type="text" name="college_type" ng-model="collegeType" class="form-control">
+		<label class="col-md-2 control-label">ที่อยู่ <span class="star-red">*</span></label>
+		<div class="col-md-10" ng-class="{ 'has-error' : form.$submitted && form.address.$invalid }">
+			<input type="text" name="address" ng-model="address" class="form-control" required>
+			<p ng-show="form.$submitted && form.address.$invalid" class="help-block">กรุณาป้อนที่อยู่</p>
 		</div>
-		<label class="col-md-2 control-label">ชื่อวิทยาลัย</label>
-		<div class="col-md-4">
-			<input type="text" name="college_name" ng-model="collegeName" class="form-control">
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">ระดับการศึกษา <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.graduateDegree.$invalid }">
+			<select ng-model="graduateDegree" name="graduateDegree" class="form-control" required 
+				ng-option="">
+				<option value="">เลือกระดับการศึกษา</option>
+			</select>
+			<p ng-show="form.$submitted && form.graduateDegree.$invalid" class="help-block">กรุณาเลือกระดับการศึกษา</p>
+		</div>
+		<label class="col-md-2 control-label">ความเชี่ยวชาญ <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.expertise.$invalid }">
+			<select ng-model="expertise" name="expertise" class="form-control" required 
+				ng-option="">
+				<option value="">เลือกความเชี่ยวชาญ</option>
+			</select>
+			<p ng-show="form.$submitted && form.expertise.$invalid" class="help-block">กรุณาเลือกความเชี่ยวชาญ</p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-2 control-label">ประเภทวิทยาลัย <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.collegeType.$invalid }">
+			<select ng-model="collegeType" name="collegeType" class="form-control" required 
+				ng-option="">
+				<option value="">เลือกประเภทวิทยาลัย</option>
+			</select>
+			<p ng-show="form.$submitted && form.collegeType.$invalid" class="help-block">กรุณาเลือกประเภทวิทยาลัย</p>
+		</div>
+		<label class="col-md-2 control-label">ชื่อวิทยาลัย <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.collegeName.$invalid }">
+			<input type="text" name="collegeName" ng-model="collegeName" class="form-control" required>
+			<p ng-show="form.$submitted && form.collegeName.$invalid" class="help-block">กรุณาป้อนชื่อวิทยาลัย</p>
 		</div>
 		
 	</div>
 
 	<div class="form-group">
-		<label class="col-md-2 control-label">สังกัดสาขา</label>
-		<div class="col-md-4">
-			<input type="text" name="department" ng-model="department" class="form-control">
+		<label class="col-md-2 control-label">สังกัดสาขา <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.major.$invalid }">
+			<select ng-model="major" name="major" class="form-control" required 
+				ng-option="">
+				<option value="">เลือกสาขา</option>
+			</select>
+			<p ng-show="form.$submitted && form.major.$invalid" class="help-block">กรุณาเลือกสาขา</p>
 		</div>
-		<label class="col-md-2 control-label">จังหวัด</label>
-		<div class="col-md-4">
-			<input type="text" name="province" ng-model="province" class="form-control">
+		<label class="col-md-2 control-label">จังหวัด <span class="star-red">*</span></label>
+		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.province.$invalid }">
+			<select ng-model="province" name="province" class="form-control" required 
+				ng-option="">
+				<option value="">เลือกจังหวัด</option>
+			</select>
+			<p ng-show="form.$submitted && form.province.$invalid" class="help-block">กรุณาเลือกจังหวัด</p>
 		</div>
 	</div>
 
@@ -82,6 +110,5 @@
 			<button type="button" class="btn btn-default">ล้างข้อมูล</button>
 		</div>
 	</div>
-
 
 </form>
