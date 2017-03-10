@@ -10,6 +10,8 @@ var mongoose = require('mongoose');
 var User = require('./models/user');
 var Province = require('./models/province');
 
+var PORT = process.env.PORT || 3000;
+
 mongoose.connect(config.database);
 
 app.use(express.static(__dirname + '/public'));
@@ -181,6 +183,6 @@ apiRoutes.delete('/province/:id', passport.authenticate('jwt', {
 
 app.use('/api', apiRoutes);
 
-app.listen(3000, function() {
-	console.log('server running on port 3000.');
+app.listen(PORT, function() {
+	console.log('server running on port ' + PORT);
 });
