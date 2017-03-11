@@ -4,7 +4,7 @@
 	<div class="form-group">
 		<label class="col-md-2 control-label">รหัสบัตรประชาชน <span class="star-red">*</span></label></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.idCard.$invalid }">
-			<input type="number" name="idCard" ng-model="idCard" class="form-control" maxlength="13" required>
+			<input type="text" name="idCard" ng-model="idCard" class="form-control" maxlength="13" required>
 			<p ng-show="form.$submitted && form.idCard.$invalid" class="help-block">กรุณาป้อนรหัสบัตรประชาชน</p>
 		</div>
 		<label class="col-md-2 control-label">ชื่อ-นามสกุล <span class="star-red">*</span></label></label>
@@ -52,7 +52,7 @@
 		<label class="col-md-2 control-label">ระดับการศึกษา <span class="star-red">*</span></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.graduateDegree.$invalid }">
 			<select ng-model="graduateDegree" name="graduateDegree" class="form-control" required 
-				ng-option="">
+				ng-options="e._id as e.educationName for e in educationDegreeLists">
 				<option value="">เลือกระดับการศึกษา</option>
 			</select>
 			<p ng-show="form.$submitted && form.graduateDegree.$invalid" class="help-block">กรุณาเลือกระดับการศึกษา</p>
@@ -60,7 +60,7 @@
 		<label class="col-md-2 control-label">ความเชี่ยวชาญ <span class="star-red">*</span></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.expertise.$invalid }">
 			<select ng-model="expertise" name="expertise" class="form-control" required 
-				ng-option="">
+				ng-options="e._id as e.expertiseName for e in expertiseLists">
 				<option value="">เลือกความเชี่ยวชาญ</option>
 			</select>
 			<p ng-show="form.$submitted && form.expertise.$invalid" class="help-block">กรุณาเลือกความเชี่ยวชาญ</p>
@@ -71,7 +71,7 @@
 		<label class="col-md-2 control-label">ประเภทวิทยาลัย <span class="star-red">*</span></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.collegeType.$invalid }">
 			<select ng-model="collegeType" name="collegeType" class="form-control" required 
-				ng-option="">
+				ng-options="c._id as c.collegeTypeName for c in collegeTypeLists">
 				<option value="">เลือกประเภทวิทยาลัย</option>
 			</select>
 			<p ng-show="form.$submitted && form.collegeType.$invalid" class="help-block">กรุณาเลือกประเภทวิทยาลัย</p>
@@ -88,7 +88,7 @@
 		<label class="col-md-2 control-label">สังกัดสาขา <span class="star-red">*</span></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.major.$invalid }">
 			<select ng-model="major" name="major" class="form-control" required 
-				ng-option="">
+				ng-options="m._id as m.majorName for m in majorLists">
 				<option value="">เลือกสาขา</option>
 			</select>
 			<p ng-show="form.$submitted && form.major.$invalid" class="help-block">กรุณาเลือกสาขา</p>
@@ -96,7 +96,7 @@
 		<label class="col-md-2 control-label">จังหวัด <span class="star-red">*</span></label>
 		<div class="col-md-4" ng-class="{ 'has-error' : form.$submitted && form.province.$invalid }">
 			<select ng-model="province" name="province" class="form-control" required 
-				ng-option="">
+				ng-options="p as p.province_name for p in provinceLists">
 				<option value="">เลือกจังหวัด</option>
 			</select>
 			<p ng-show="form.$submitted && form.province.$invalid" class="help-block">กรุณาเลือกจังหวัด</p>
@@ -107,7 +107,7 @@
 		<label class="col-md-2 control-label"></label>
 		<div class="col-md-4">
 			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> บันทึก</button>
-			<button type="button" class="btn btn-default">ล้างข้อมูล</button>
+			<button type="button" class="btn btn-default" ng-click="clearForm()">ล้างข้อมูล</button>
 		</div>
 	</div>
 

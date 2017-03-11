@@ -91,8 +91,122 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		console.log('running on RegisterController');
 	}
 
+	// load education degree lists
+	$scope.educationDegreeLists = [];
+	$scope.loadEducationDegreeList = function() {
+		$http.get('/api/education_degree', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.educationDegreeLists = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	// load expertise lists
+	$scope.expertiseLists = [];
+	$scope.loadExpertiseList = function() {
+		$http.get('/api/expertise', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.expertiseLists = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	// load collegeType lists
+	$scope.collegeTypeLists = [];
+	$scope.loadCollegeType = function() {
+		$http.get('/api/college_type', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.collegeTypeLists = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	// load major lists
+	$scope.malorLists = [];
+	$scope.loadMajorList = function() {
+		$http.get('/api/major', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.majorLists = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	// load province lists
+	$scope.provinceLists = [];
+	$scope.loadProvinceList = function() {
+		$http.get('/api/province', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			console.log(response);
+			$scope.provinceLists = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	$scope.loadEducationDegreeList();
+	$scope.loadExpertiseList();
+	$scope.loadCollegeType();
+	$scope.loadMajorList();
+	$scope.loadProvinceList();
+
+	// save
 	$scope.save = function() {
-		console.log('registered.');
+		var param = {
+			idCard: $scope.idCard,
+			name: $scope.name,
+			birthdate: $scope.birthdate,
+			tel: $scope.tel,
+			email: $scope.email,
+			lineID: $scope.lineID,
+			address: $scope.address,
+			graduateDegree: $scope.graduateDegree,
+			expertise: $scope.expertise,
+			collegeType: $scope.collegeType,
+			collegeName: $scope.collegeName,
+			major: $scope.major,
+			province: $scope.province
+		};
+		$http.post('/api/teacher_register', param).success(function(response) {
+			if (response.success) {
+				alert('ลงทะเบียนเรียบร้อยแล้ว');
+				$scope.clearForm();
+			} else {
+				alert('เกิดข้อผิดพลาดในการลงทะเบียน');
+			}
+		}).error(function(e, status) {
+			alert('เกิดข้อผิดพลาดในการลงทะเบียน');
+			console.log('status : ' + status + ' ' + e);
+		});
+	};
+
+	$scope.clearForm = function() {
+		$scope.idCard = '';
+		$scope.name = '';
+		$scope.birthdate = '';
+		$scope.tel = '';
+		$scope.email = '';
+		$scope.lineID = '';
+		$scope.address = '';
+		$scope.graduateDegree = '';
+		$scope.expertise = '';
+		$scope.collegeType = '';
+		$scope.collegeName = '';
+		$scope.major = '';
+		$scope.province = '';
+		$scope.form.$setPristine();
 	};
 })
 .controller('LoginController', function($scope, $http, $location, $localStorage, $window, $rootScope) {
@@ -119,6 +233,8 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 				$location.path('/dashboard');
 				//$window.location.reload();
 				$rootScope.isLogin = true;
+			} else {
+				alert('ชื่อผู้ใช้หรือรหัสไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
 			}
 
 			//console.log('token : ' + $localStorage.token);

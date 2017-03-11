@@ -14,6 +14,7 @@ var Major = require('./models/major');
 var EducationDegree = require('./models/education_degree');
 var Expertise = require('./models/expertise');
 var Region = require('./models/region');
+var Teacher = require('./models/teacher');
 
 var PORT = process.env.PORT || 3000;
 
@@ -99,6 +100,39 @@ apiRoutes.post('/authenticate', function(req, res) {
 	});
 });
 
+apiRoutes.post('/teacher_register', function(req, res) {
+	//console.log(req.body);
+	var teacher = new Teacher({
+		idCard : req.body.idCard,
+		name: req.body.name,
+		birthdate: req.body.birthdate,
+		tel: req.body.tel,
+		email: req.body.email,
+		lineID: req.body.lineID,
+		address: req.body.address,
+		graduateDegree: req.body.graduateDegree,
+		expertise: req.body.expertise,
+		collegeType: req.body.collegeType,
+		collegeName: req.body.collegeName,
+		major: req.body.major,
+		province: req.body.province._id,
+		region: req.body.province.region._id
+	});
+
+	teacher.save(function(err) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'insert teacher not success'
+			});
+		} 
+		res.json({
+			success: true,
+			message: 'insert teacher success'
+		});
+	});
+});
+
 apiRoutes.get('/dashboard', passport.authenticate('jwt', {
 	session: false
 }), function(req, res) {
@@ -127,9 +161,9 @@ apiRoutes.post('/province', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/province', passport.authenticate('jwt', {
+apiRoutes.get('/province', /*passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+}),*/ function(req, res) {
 
 	/*Province.find({}, function(err, docs) {
 		if (err) {
@@ -222,9 +256,9 @@ apiRoutes.post('/college_type', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/college_type', passport.authenticate('jwt', {
+apiRoutes.get('/college_type'/*, passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+})*/, function(req, res) {
 
 	CollegeType.find({}, function(err, docs) {
 		if (err) {
@@ -305,9 +339,9 @@ apiRoutes.post('/major', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/major', passport.authenticate('jwt', {
+apiRoutes.get('/major', /*passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+}),*/ function(req, res) {
 
 	Major.find({}, function(err, docs) {
 		if (err) {
@@ -388,9 +422,9 @@ apiRoutes.post('/education_degree', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/education_degree', passport.authenticate('jwt', {
+apiRoutes.get('/education_degree'/*, passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+})*/, function(req, res) {
 
 	EducationDegree.find({}, function(err, docs) {
 		if (err) {
@@ -471,9 +505,9 @@ apiRoutes.post('/expertise', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/expertise', passport.authenticate('jwt', {
+apiRoutes.get('/expertise'/*, passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+})*/, function(req, res) {
 
 	Expertise.find({}, function(err, docs) {
 		if (err) {
