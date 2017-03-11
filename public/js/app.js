@@ -1,4 +1,4 @@
-angular.module('myApp', ['ui.router', 'ngStorage'])
+angular.module('myApp', ['ui.router', 'ngStorage', 'smart-table', 'ui.bootstrap'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 	// default route
@@ -64,6 +64,12 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		url: '/region',
 		templateUrl: '../views/region.html',
 		controller: 'RegionController'
+	})
+	.state({
+		name: 'teacher',
+		url: '/teacher',
+		templateUrl: '../views/teacher.html',
+		controller: 'TeacherController'
 	});
 })
 .run(function($location) {
@@ -97,7 +103,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/education_degree', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.educationDegreeLists = response;
 		}).error(function(e, status) {
 			console.log(e);
@@ -110,7 +116,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/expertise', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.expertiseLists = response;
 		}).error(function(e, status) {
 			console.log(e);
@@ -123,7 +129,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/college_type', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.collegeTypeLists = response;
 		}).error(function(e, status) {
 			console.log(e);
@@ -136,7 +142,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/major', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.majorLists = response;
 		}).error(function(e, status) {
 			console.log(e);
@@ -149,7 +155,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/province', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.provinceLists = response;
 		}).error(function(e, status) {
 			console.log(e);
@@ -216,6 +222,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 			$location.path('/dashboard');
 		} else {
 			$rootScope.isLogin = false;
+			$location.path('/login');
 		}
 	}
 
@@ -253,7 +260,12 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		}).success(function(response) {
 			console.log(response);
 		}).error(function(e) {
-			console.log(e);
+			if (status == 401) {
+				localStorage.removeItem('token');
+				$location.path('/login');
+			} else {
+				console.log(e);
+			}
 		});
 	}
 })
@@ -287,7 +299,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/region', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.regions = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -304,7 +316,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/province', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.provinces = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -411,7 +423,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/college_type', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.collegeTypes = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -505,7 +517,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/major', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.majors = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -599,7 +611,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/education_degree', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.educationDegrees = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -693,7 +705,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/expertise', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.expertises = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -786,7 +798,7 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 		$http.get('/api/region', {
 			headers:{ 'Authorization': localStorage.getItem('token') }
 		}).success(function(response) {
-			console.log(response);
+			//console.log(response);
 			$scope.regions = response;
 		}).error(function(e, status) {
 			if (status == 401) {
@@ -871,4 +883,125 @@ angular.module('myApp', ['ui.router', 'ngStorage'])
 			}
 		});
 	};
+})
+.controller('TeacherController', function($scope, $http, $location, $rootScope, $uibModal) {
+
+	$scope.regions = [];
+	$scope.loadRegion = function() {
+		$http.get('/api/region', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			//console.log(response);
+			$scope.regions = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	// load collegeType lists
+	$scope.collegeTypes = [];
+	$scope.loadCollegeType = function() {
+		$http.get('/api/college_type', {
+			headers:{ 'Authorization': localStorage.getItem('token') }
+		}).success(function(response) {
+			//console.log(response);
+			$scope.collegeTypes = response;
+		}).error(function(e, status) {
+			console.log(e);
+		});
+	};
+
+	$scope.loadCollegeType();
+	$scope.loadRegion();
+
+	// load province lists
+	$scope.provinces = [];
+	$scope.loadProvinceList = function() {
+		if ($scope.region) {
+			$http.get('/api/province/' + $scope.region, {
+				headers:{ 'Authorization': localStorage.getItem('token') }
+			}).success(function(response) {
+				//console.log(response);
+				$scope.provinces = response;
+			}).error(function(e, status) {
+				console.log(e);
+			});
+		} else {
+			$scope.provinces = [];
+		}
+	};
+
+	$scope.rowCollection = [];
+	$scope.displayCollection = [].concat($scope.rowCollection);
+	$scope.save = function() {
+		var param = {
+			region: $scope.region,
+			province: $scope.province,
+			collegeType: $scope.collegeType
+		};
+
+		$http.post('/api/teacher/query', param, {
+				headers:{ 'Authorization': localStorage.getItem('token') }
+			}).success(function(response) {
+			console.log(response);
+			//$scope.teacherList = response;
+			$scope.rowCollection = response;
+			$scope.displayCollection = [].concat($scope.rowCollection);
+		}).error(function(e, status) {
+			if (status == 401) {
+				localStorage.removeItem('token');
+				$location.path('/login');
+			} else {
+				console.log(e);
+			}
+		});
+	};
+
+	$scope.openDialogDetail = function(data) {
+		var modalInstance = $uibModal.open({
+			animation : false,
+			templateUrl : '../views/teacher_modal.html',
+			controller : 'TeacherModalController',
+			size : 'lg',
+			backdrop: 'static',
+		    keyboard: false,
+		    resolve: {
+    			data: function () {
+      				return data;
+    			}
+  			}
+		});
+
+		modalInstance.result.then(function() {
+			
+		}, function() {
+			//$log.info('Modal dismissed at: ' + new Date());
+			console.log('close dialog');
+		});
+	};
+})
+.controller('TeacherModalController', function($uibModalInstance, data, $scope) {
+
+	function setData() {
+		//console.log(data);
+		$scope.idCard = data.idCard;
+		$scope.name = data.name;
+		$scope.birthdate = data.birthdate;
+		$scope.tel = data.tel;
+		$scope.email = data.email;
+		$scope.lineID = data.lineID;
+		$scope.address = data.address;
+		$scope.graduateDegree = data.graduateDegree.educationName;
+		$scope.expertise = data.expertise.expertiseName;
+		$scope.collegeType = data.collegeType.collegeTypeName;
+		$scope.collegeName = data.collegeName;
+		$scope.major = data.major.majorName;
+		$scope.province = data.province.province_name;
+	}
+
+	setData();
+
+	$scope.cancel = function () {
+	 	$uibModalInstance.dismiss('cancel');
+ 	};
 });

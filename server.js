@@ -33,7 +33,6 @@ require('./config/passport')(passport);
 
 var apiRoutes = express.Router();
 
-
 // Register new users
 apiRoutes.post('/register', function(req, res) {
 	if (!req.body.user || !req.body.password) {
@@ -133,6 +132,38 @@ apiRoutes.post('/teacher_register', function(req, res) {
 	});
 });
 
+apiRoutes.post('/teacher/query', passport.authenticate('jwt', {
+		session: false
+	}), function(req, res) {
+	var query = {};
+	if (req.body.region) {
+		query.region = req.body.region
+	}
+
+	if (req.body.province) {
+		query.province = req.body.province
+	}
+
+	if (req.body.collegeType) {
+		query.collegeType = req.body.collegeType
+	}
+
+	Teacher.find(query)
+		.populate('region')
+		.populate('graduateDegree')
+		.populate('expertise')
+		.populate('collegeType')
+		.populate('major')
+		.populate('province')
+		.exec(function(err, docs) {
+			if (err) {
+				res.json([]);
+			}
+			res.json(docs);
+		});
+	//console.log(query);
+});
+
 apiRoutes.get('/dashboard', passport.authenticate('jwt', {
 	session: false
 }), function(req, res) {
@@ -184,6 +215,18 @@ apiRoutes.get('/province', /*passport.authenticate('jwt', {
 		}
 		res.json(docs);
 	});
+});
+
+apiRoutes.get('/province/:regionId', function(req, res) {
+	Province.find({region: req.params.regionId}, function(err, docs) {
+		if (err) {
+			res.json({
+				success: false,
+				message: 'cannot load province by region'
+			});
+		}
+		res.json(docs);
+	})
 });
 
 apiRoutes.put('/province', passport.authenticate('jwt', {
@@ -588,9 +631,9 @@ apiRoutes.post('/region', passport.authenticate('jwt', {
 	});
 });
 
-apiRoutes.get('/region', passport.authenticate('jwt', {
+apiRoutes.get('/region', /*passport.authenticate('jwt', {
 	session: false
-}), function(req, res) {
+}), */function(req, res) {
 
 	Region.find({}, function(err, docs) {
 		if (err) {
