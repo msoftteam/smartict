@@ -945,8 +945,12 @@ angular.module('myApp', ['ui.router', 'ngStorage', 'smart-table', 'ui.bootstrap'
 			}).success(function(response) {
 			console.log(response);
 			//$scope.teacherList = response;
-			$scope.rowCollection = response;
-			$scope.displayCollection = [].concat($scope.rowCollection);
+			if (response.length > 0) {
+				$scope.rowCollection = response;
+				$scope.displayCollection = [].concat($scope.rowCollection);
+			} else {
+				alert('ไม่พบข้อมูลที่ค้นหา');
+			}
 		}).error(function(e, status) {
 			if (status == 401) {
 				localStorage.removeItem('token');
@@ -978,6 +982,12 @@ angular.module('myApp', ['ui.router', 'ngStorage', 'smart-table', 'ui.bootstrap'
 			//$log.info('Modal dismissed at: ' + new Date());
 			console.log('close dialog');
 		});
+	};
+
+	$scope.clearForm = function() {
+		$scope.region = '';
+		$scope.province = '';
+		$scope.collegeType = '';
 	};
 })
 .controller('TeacherModalController', function($uibModalInstance, data, $scope) {
